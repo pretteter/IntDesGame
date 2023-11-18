@@ -1,15 +1,29 @@
 using Godot;
 using System;
+using System.Runtime.CompilerServices;
 
-public partial class Main : Node2D
+public partial class Main : Node
 {
-	// Called when the node enters the scene tree for the first time.
+
+
 	public override void _Ready()
 	{
+		GD.Print("Hello World!");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void _on_play_pressed()
 	{
+		GD.Print("Starting Game");
+		GetTree().ChangeSceneToFile("res://world.tscn");
 	}
+
+	public void _on_quit_pressed()
+	{
+		GD.Print("Quitting Game");
+		GetTree().Quit();
+	}
+
 }
+
+
+
