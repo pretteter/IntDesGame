@@ -11,7 +11,7 @@ public partial class Main : Node
 		GD.Print("Hello World!");
 	}
 
-	public void _on_play_pressed()
+	public void _on_start_pressed()
 	{
 		GD.Print("Starting Game");
 		GetTree().ChangeSceneToFile("res://world.tscn");
