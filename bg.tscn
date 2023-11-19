@@ -1,3 +1,15 @@
-[gd_scene format=3 uid="uid://xk4e4qncwies"]
+[gd_scene load_steps=3 format=3 uid="uid://xk4e4qncwies"]
+
+[ext_resource type="Script" path="res://BG.cs" id="1_ljphf"]
+[ext_resource type="Texture2D" uid="uid://sm5xemgqucxa" path="res://Assets/Background_Mountains.png" id="2_eqsep"]
 
 [node name="BG" type="ParallaxBackground"]
+script = ExtResource("1_ljphf")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(1445, 0)
+
+[node name="BackgroundMountains" type="Sprite2D" parent="ParallaxLayer"]
+texture_filter = 1
+position = Vector2(770, 420)
+texture = ExtResource("2_eqsep")

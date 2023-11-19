@@ -1,3 +1,37 @@
-[gd_scene format=3 uid="uid://bbvhyob8w2i80"]
+[gd_scene load_steps=5 format=3 uid="uid://bbvhyob8w2i80"]
+
+[ext_resource type="PackedScene" uid="uid://ckqclqes7i4ar" path="res://Player/Player.tscn" id="1_7t61o"]
+[ext_resource type="Script" path="res://BG.cs" id="1_n21q8"]
+[ext_resource type="Texture2D" uid="uid://sm5xemgqucxa" path="res://Assets/Background_Mountains.png" id="2_jvcms"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjfi3"]
+size = Vector2(1206, 200)
 
 [node name="World" type="Node2D"]
+
+[node name="BG" type="ParallaxBackground" parent="."]
+script = ExtResource("1_n21q8")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="BG"]
+motion_mirroring = Vector2(1445, 0)
+
+[node name="BackgroundMountains" type="Sprite2D" parent="BG/ParallaxLayer"]
+texture_filter = 1
+position = Vector2(770, 420)
+texture = ExtResource("2_jvcms")
+
+[node name="Player" parent="." instance=ExtResource("1_7t61o")]
+position = Vector2(587, 372)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(573, 568)
+shape = SubResource("RectangleShape2D_kjfi3")
+
+[node name="Panel" type="Panel" parent="StaticBody2D/CollisionShape2D"]
+offset_left = -611.0
+offset_top = -100.0
+offset_right = 614.0
+offset_bottom = 106.0
+metadata/_edit_use_anchors_ = true
