@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckqclqes7i4ar"]
+[gd_scene load_steps=10 format=3 uid="uid://ckqclqes7i4ar"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_ikemb"]
 [ext_resource type="Texture2D" uid="uid://cxc733hx4jis7" path="res://Assets/snowman-01.png" id="2_evug8"]
@@ -37,6 +37,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_jld2q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
 [sub_resource type="Animation" id="Animation_t5gpo"]
 resource_name = "idle"
 length = 2.0
@@ -66,26 +81,14 @@ tracks/1/keys = {
 "values": [0, 1]
 }
 
-[sub_resource type="Animation" id="Animation_jld2q"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tj5nx"]
 _data = {
 "RESET": SubResource("Animation_jld2q"),
 "idle": SubResource("Animation_t5gpo")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4obf"]
+size = Vector2(119.75, 83)
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(548, 350)
@@ -113,3 +116,18 @@ autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_tj5nx")
 }
+
+[node name="AtkRight" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AtkRight"]
+position = Vector2(78.125, -32)
+shape = SubResource("RectangleShape2D_n4obf")
+
+[node name="AtkLeft" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AtkLeft"]
+position = Vector2(-53, -32)
+shape = SubResource("RectangleShape2D_n4obf")
+
+[connection signal="body_entered" from="AtkRight" to="." method="_on_atk_right_body_entered"]
+[connection signal="body_entered" from="AtkLeft" to="." method="_on_atk_left_body_entered"]

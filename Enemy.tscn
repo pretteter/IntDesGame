@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dj4q8y8hv087r"]
+[gd_scene load_steps=19 format=3 uid="uid://dj4q8y8hv087r"]
 
 [ext_resource type="Texture2D" uid="uid://cmks24f3aob66" path="res://Assets/enemySpritesheet.png" id="1_1adwh"]
 [ext_resource type="Script" path="res://Enemy.cs" id="1_twau1"]
@@ -105,9 +105,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1mrh"]
 size = Vector2(1054, 110)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3od7r"]
-size = Vector2(52, 56)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_paa7y"]
 radius = 28.0
 
@@ -115,6 +112,7 @@ radius = 28.0
 script = ExtResource("1_twau1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-0.5, 5.5)
 shape = SubResource("RectangleShape2D_x7iuu")
 
@@ -122,7 +120,7 @@ shape = SubResource("RectangleShape2D_x7iuu")
 texture_filter = 1
 position = Vector2(1, -10)
 sprite_frames = SubResource("SpriteFrames_r0dxf")
-animation = &"idle"
+animation = &"walking"
 
 [node name="PlayerDetection" type="Area2D" parent="."]
 visible = false
@@ -130,12 +128,6 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
 position = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_s1mrh")
-
-[node name="PlayerDeath" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDeath"]
-position = Vector2(1, 6)
-shape = SubResource("RectangleShape2D_3od7r")
 
 [node name="PlayerCollision" type="Area2D" parent="."]
 
@@ -145,5 +137,4 @@ shape = SubResource("CircleShape2D_paa7y")
 
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
 [connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]
-[connection signal="body_entered" from="PlayerDeath" to="." method="_on_player_death_body_entered"]
 [connection signal="body_entered" from="PlayerCollision" to="." method="_on_player_collision_body_entered"]

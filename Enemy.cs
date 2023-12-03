@@ -8,7 +8,7 @@ public partial class Enemy : CharacterBody2D
 
 	public Player player;
 	public bool chase;
-	public const float SPEED = 50.0f;
+	public const float SPEED = 100.0f;
 
 
 	public override void _Ready()
@@ -27,15 +27,15 @@ public partial class Enemy : CharacterBody2D
 			{
 				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("walking");
 			}
-			player = GetNode<Player>("../../Player/Player");
+			player = GetNode<Player>("../Player/Player");
 			Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
 			if (direction.X > 0)
 			{
-				GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = true;
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
 			}
 			else
 			{
-				GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = true;
 			}
 			//Move frog
 			velocity.X = direction.X * SPEED;
@@ -69,13 +69,7 @@ public partial class Enemy : CharacterBody2D
 			chase = false;
 		}
 	}
-	public void _on_player_death_body_entered(Node2D body)
-	{
-		if (body.GetType().Name == "Player")
-		{
-			death();
-		}
-	}
+
 	public void _on_player_collision_body_entered(Node2D body)
 	{
 		if (body.GetType().Name == "Player")
