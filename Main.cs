@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 public partial class Main : Node
 {
 
-
 	public override void _Ready()
 	{
 		GD.Print("Hello World!");
@@ -22,7 +21,6 @@ public partial class Main : Node
 		GD.Print("Quitting Game");
 		GetTree().Quit();
 	}
-
 }
 
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 public partial class Player : CharacterBody2D
 {
 	public int health = 3;
+	public int score = 0;
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -400.0f;
 
@@ -19,128 +20,121 @@ public partial class Player : CharacterBody2D
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_animationPlayer.Play("idle");
 		GD.Print("Ready");
-		GetNode<CollisionShape2D>("AtkLeft/CollisionShape2D").Disabled = false;
-		GetNode<CollisionShape2D>("AtkRight/CollisionShape2D").Disabled = false;
-
 	}
-//private AnimatedSprite2D _animatedSprite;
-/* public override void _Ready()
-{
-	_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-	_animatedSprite.Play("idle");
-	GD.Print("Ready");
-} */
-
-
-
-public override void _PhysicsProcess(double delta)
-{
-	Vector2 velocity = Velocity;
-
-	// Add the gravity.
-	if (!IsOnFloor())
+	//private AnimatedSprite2D _animatedSprite;
+	/* public override void _Ready()
 	{
-		velocity.Y += gravity * (float)delta;
-	}
-	/*
-			// Handle Jump.
-			if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-			{
-				velocity.Y = JumpVelocity;
-				_animationPlayer.Play("jump");
-			}
-	 */
-	// Get the input direction and handle the movement/deceleration.
-	// As good practice, you should replace UI actions with custom gameplay actions.
-	Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_animatedSprite.Play("idle");
+		GD.Print("Ready");
+	} */
 
-	if (direction != Vector2.Zero)
+
+
+	public override void _PhysicsProcess(double delta)
 	{
-		if (direction[0] < 0)
+		Vector2 velocity = Velocity;
+
+		// Add the gravity.
+		if (!IsOnFloor())
 		{
-			GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
+			velocity.Y += gravity * (float)delta;
+		}
+		/*
+				// Handle Jump.
+				if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+				{
+					velocity.Y = JumpVelocity;
+					_animationPlayer.Play("jump");
+				}
+		 */
+		// Get the input direction and handle the movement/deceleration.
+		// As good practice, you should replace UI actions with custom gameplay actions.
+		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+
+		if (direction != Vector2.Zero)
+		{
+			if (direction[0] < 0)
+			{
+				//GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
+				if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").Scale.X < 0)
+				{
+					//GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = true;
+					GetNode<AnimatedSprite2D>("AnimatedSprite2D").ApplyScale(new Vector2(-1, 1));
+				}
+
+			}
+			else
+			{
+				if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").Scale.X > 0)
+				{
+					GetNode<AnimatedSprite2D>("AnimatedSprite2D").ApplyScale(new Vector2(-1, 1));
+				}
+				
+			}
+			/* 
+						velocity.X = direction.X * Speed;
+						if (velocity.Y == 0)
+						{
+							_animationPlayer.Play("run");
+						} */
 		}
 		else
 		{
-			GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = true;
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+			if (velocity.Y == 0)
+			{
+				if (_animationPlayer.CurrentAnimation != "attack")
+				{
+					_animationPlayer.Play("idle");
+				}
+			}
 		}
-		/* 
-					velocity.X = direction.X * Speed;
-					if (velocity.Y == 0)
-					{
-						_animationPlayer.Play("run");
-					} */
-	}
-	else
-	{
-		velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-		if (velocity.Y == 0)
+		/* if (velocity.Y > 0)
 		{
-			_animationPlayer.Play("idle");
+			_animationPlayer.Play("fall");
+		} */
+
+		Velocity = velocity;
+		MoveAndSlide();
+
+		if (health <= 0)
+		{
+			QueueFree();
+			GetTree().ChangeSceneToFile("res://Main.tscn");
 		}
 	}
-	/* if (velocity.Y > 0)
+	public void _on_gun_hit_body_entered(Node2D body)
 	{
-		_animationPlayer.Play("fall");
-	} */
+		GD.Print("gun hit area entered");
+		GD.Print("Body in Hitbox: " + body.Name);
+        string bodyName = body.Name.ToString();
 
-	Velocity = velocity;
-	MoveAndSlide();
 
-	if (health <= 0)
-	{
-		QueueFree();
-		GetTree().ChangeSceneToFile("res://Main.tscn");
+        if (bodyName.Contains("Enemy") )
+		{
+			GD.Print("enemy detected");
+			Enemy enemy = GetNode<Enemy>("../../" + bodyName);
+			score += 1000;
+			enemy.death();
+		}
 	}
-}
-//add Action to InputMap
-public override async void _Input(InputEvent @event)
-{
-    if (@event.IsActionPressed("LeftHit"))
-    {
-		GetNode<Timer>("Timer"); //------------------------------????????
-		//GetNode<Area2D>("AtkLeft").SetProcess(true);
-		GetNode<CollisionShape2D>("AtkLeft/CollisionShape2D").Disabled = true;
-		GD.Print("collision left spawn");
 
-		await ToSignal(GetTree().CreateTimer(1.0), "timeout"); //-----------------FIX THIS (durch timer ersetzen)
-		//GetNode<Area2D>("AtkLeft").SetProcess(false);
-		GetNode<CollisionShape2D>("AtkLeft/CollisionShape2D").Disabled = false;
-		GD.Print("collision left despawn");
-    }
-}
 
-public void _on_atk_right_body_entered(Node2D body)
-{
 
-	if (body.GetType().Name == "Enemy" && GetNode<CollisionShape2D>("AtkRight/CollisionShape2D").Disabled == true)
+	//add Action to InputMap
+	public override void _Input(InputEvent @event)
 	{
-		Enemy enemy = GetNode<Enemy>("../../Enemy");
-		enemy.death();
-	}
-}
- public void _on_atk_left_body_entered(Node2D body)
-{
-	GD.Print("left body entered");
-	if (body.GetType().Name == "Enemy" && GetNode<CollisionShape2D>("AtkLeft/CollisionShape2D").Disabled == true)
-	{
-		GD.Print("HitboxEnabled");
-		Enemy enemy = GetNode<Enemy>("../../Enemy");
-		enemy.death();
-	}
-} 
-/* public void _on_atk_left_input_event(Node2D body)
-{
+		if (@event.IsActionPressed("LeftHit"))
+		{
+			GD.Print("AttackAnimLeft");
+			_animationPlayer.Play("attack");
 
-	if (Input.IsActionPressed("LeftHit"))
-	{
-		//GetNode<Area2D>("AtkLeft").SetProcess(true);
-		GetNode<Area2D>("AtkLeft").Show();
-		GD.Print("collision left spawn");
-		System.Threading.Thread.Sleep(500);
-		//GetNode<Area2D>("AtkLeft").SetProcess(false);
-		GetNode<Area2D>("AtkLeft").Hide();
-		GD.Print("collision left despawn");
+		}
+		if (@event.IsActionPressed("RightHit"))
+		{
+			GD.Print("AttackAnimRight");
+			_animationPlayer.Play("attack");
+		}
 	}
-} */
 }

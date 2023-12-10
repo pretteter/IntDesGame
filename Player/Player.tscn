@@ -1,15 +1,91 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckqclqes7i4ar"]
+[gd_scene load_steps=22 format=3 uid="uid://ckqclqes7i4ar"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_ikemb"]
 [ext_resource type="Texture2D" uid="uid://cxc733hx4jis7" path="res://Assets/snowman-01.png" id="2_evug8"]
+[ext_resource type="Texture2D" uid="uid://cy3f60nnangu5" path="res://Assets/SnowmanAtkNew.png" id="2_lco2q"]
 [ext_resource type="Texture2D" uid="uid://xvx4a2u6yhh3" path="res://Assets/snowman-02.png" id="3_h04p1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aswjg"]
 radius = 17.0
 height = 56.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpuc2"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw651"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_va7hn"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_po50r"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1a1up"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihhws"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i54te"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(600, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbxno"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(700, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64n77"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(800, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8ix1"]
+atlas = ExtResource("2_lco2q")
+region = Rect2(900, 0, 100, 100)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_an0gt"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpuc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mw651")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_va7hn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_po50r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1a1up")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ihhws")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i54te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbxno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64n77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8ix1")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 20.0
+}, {
 "frames": [],
 "loop": true,
 "name": &"fall",
@@ -37,6 +113,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwosm"]
+size = Vector2(77.8295, 49.3919)
+
 [sub_resource type="Animation" id="Animation_jld2q"]
 length = 0.001
 tracks/0/type = "value"
@@ -50,6 +129,70 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/GunHit/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_25vuq"]
+resource_name = "attack"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0499388, 0.1, 0.15016, 0.2, 0.250259, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6, 9]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/GunHit/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.254294, 0.399605),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_t5gpo"]
@@ -84,11 +227,9 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tj5nx"]
 _data = {
 "RESET": SubResource("Animation_jld2q"),
+"attack": SubResource("Animation_25vuq"),
 "idle": SubResource("Animation_t5gpo")
 }
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4obf"]
-size = Vector2(119.75, 83)
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(548, 350)
@@ -103,8 +244,16 @@ texture_filter = 1
 position = Vector2(14.5938, -24.5938)
 scale = Vector2(0.668125, 0.668125)
 sprite_frames = SubResource("SpriteFrames_an0gt")
-animation = &"idle"
+animation = &"attack"
 frame = 1
+
+[node name="GunHit" type="Area2D" parent="AnimatedSprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GunHit"]
+position = Vector2(-72.7318, 7.62402)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_gwosm")
+disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -70)
@@ -117,17 +266,4 @@ libraries = {
 "": SubResource("AnimationLibrary_tj5nx")
 }
 
-[node name="AtkRight" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AtkRight"]
-position = Vector2(78.125, -32)
-shape = SubResource("RectangleShape2D_n4obf")
-
-[node name="AtkLeft" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AtkLeft"]
-position = Vector2(-53, -32)
-shape = SubResource("RectangleShape2D_n4obf")
-
-[connection signal="body_entered" from="AtkRight" to="." method="_on_atk_right_body_entered"]
-[connection signal="body_entered" from="AtkLeft" to="." method="_on_atk_left_body_entered"]
+[connection signal="body_entered" from="AnimatedSprite2D/GunHit" to="." method="_on_gun_hit_body_entered"]

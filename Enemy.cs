@@ -4,7 +4,7 @@ using System.Collections;
 
 public partial class Enemy : CharacterBody2D
 {
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle(); //Bei Treffer physics invertieren, dass Körper nach oben fliegt
 
 	public Player player;
 	public bool chase;
@@ -81,6 +81,7 @@ public partial class Enemy : CharacterBody2D
 	public async void death()
 	{
 		chase = false;
+		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
 		GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("death");
 		await ToSignal(GetNode<AnimatedSprite2D>("AnimatedSprite2D"), "animation_finished");
 		QueueFree();
