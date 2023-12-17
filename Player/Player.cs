@@ -101,7 +101,7 @@ public partial class Player : CharacterBody2D
 		if (health <= 0)
 		{
 			QueueFree();
-			GetTree().ChangeSceneToFile("res://Main.tscn");
+			GetTree().ChangeSceneToFile("res://main.tscn");
 		}
 	}
 	public void _on_gun_hit_body_entered(Node2D body)

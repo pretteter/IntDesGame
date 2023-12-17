@@ -251,7 +251,6 @@ frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GunHit"]
 position = Vector2(-72.7318, 7.62402)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_gwosm")
 disabled = true
 

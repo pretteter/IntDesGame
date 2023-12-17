@@ -15,6 +15,10 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.1", "C#", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlayerData="*res://PlayerData.cs"
+
 [dotnet]
 
 project/assembly_name="Int Des Game"

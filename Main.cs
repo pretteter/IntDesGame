@@ -21,6 +21,17 @@ public partial class Main : Node
 		GD.Print("Quitting Game");
 		GetTree().Quit();
 	}
+	public void _on_spawn_rate_value_changed(double value)
+	{
+		GD.Print("SpawnRate Changed");
+		//GetNode<Timer>("././world/SpawnTimer").WaitTime = GetNode<HSlider>("SpawnRate").Value * 0.1f;
+		//GD.Print(GetNode<HSlider>("SpawnRate").GetParent().GetParent().GetNode<Timer>("SpawnTimer"));
+		//GetNode<PlayerData>("/root/PlayerData");
+		GetNode<Label>("SpawnRate/RateDisplay").Text = value.ToString();
+		GetNode<PlayerData>("/root/PlayerData").SpawnRate = value;
+		GD.Print(GetNode<PlayerData>("/root/PlayerData").SpawnRate);
+		GD.Print(value);
+	}
 }
 
 
