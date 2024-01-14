@@ -28,7 +28,7 @@ texture = ExtResource("2_jvcms")
 position = Vector2(587, 372)
 
 [node name="Player" parent="Player" instance=ExtResource("1_7t61o")]
-position = Vector2(0, 0)
+position = Vector2(-16, -1)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

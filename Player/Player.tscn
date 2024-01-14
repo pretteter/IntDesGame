@@ -1,9 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://ckqclqes7i4ar"]
+[gd_scene load_steps=26 format=3 uid="uid://ckqclqes7i4ar"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_ikemb"]
 [ext_resource type="Texture2D" uid="uid://cxc733hx4jis7" path="res://Assets/snowman-01.png" id="2_evug8"]
 [ext_resource type="Texture2D" uid="uid://cy3f60nnangu5" path="res://Assets/SnowmanAtkNew.png" id="2_lco2q"]
 [ext_resource type="Texture2D" uid="uid://xvx4a2u6yhh3" path="res://Assets/snowman-02.png" id="3_h04p1"]
+[ext_resource type="Script" path="res://Player/Camera2D.cs" id="5_tndit"]
+[ext_resource type="Texture2D" uid="uid://f65fu82wqs5p" path="res://Assets/snowmanDmg.png" id="5_xq2m6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aswjg"]
 radius = 17.0
@@ -48,6 +50,10 @@ region = Rect2(800, 0, 100, 100)
 [sub_resource type="AtlasTexture" id="AtlasTexture_k8ix1"]
 atlas = ExtResource("2_lco2q")
 region = Rect2(900, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2kgpq"]
+atlas = ExtResource("5_xq2m6")
+region = Rect2(0, 0, 100, 100)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_an0gt"]
 animations = [{
@@ -103,8 +109,19 @@ animations = [{
 "speed": 1.0
 }, {
 "frames": [],
-"loop": true,
+"loop": false,
 "name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2kgpq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2kgpq")
+}],
+"loop": true,
+"name": &"receiveDmg",
 "speed": 5.0
 }, {
 "frames": [],
@@ -114,7 +131,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwosm"]
-size = Vector2(77.8295, 49.3919)
+size = Vector2(38.9145, 49.3919)
 
 [sub_resource type="Animation" id="Animation_jld2q"]
 length = 0.001
@@ -157,7 +174,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_25vuq"]
 resource_name = "attack"
-length = 0.4
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -177,7 +194,7 @@ tracks/1/path = NodePath("../AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0499388, 0.1, 0.15016, 0.2, 0.250259, 0.3),
+"times": PackedFloat32Array(0, 0.0446838, 0.0809502, 0.11478, 0.15016, 0.185135, 0.220478),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [1, 2, 3, 4, 5, 6, 9]
@@ -189,7 +206,7 @@ tracks/2/path = NodePath("../AnimatedSprite2D/GunHit/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.254294, 0.399605),
+"times": PackedFloat32Array(0, 0.1, 0.246542),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -224,11 +241,40 @@ tracks/1/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_lt7us"]
+resource_name = "receiveDmg"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"receiveDmg"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.095538),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tj5nx"]
 _data = {
 "RESET": SubResource("Animation_jld2q"),
 "attack": SubResource("Animation_25vuq"),
-"idle": SubResource("Animation_t5gpo")
+"idle": SubResource("Animation_t5gpo"),
+"receiveDmg": SubResource("Animation_lt7us")
 }
 
 [node name="Player" type="CharacterBody2D"]
@@ -245,18 +291,19 @@ position = Vector2(14.5938, -24.5938)
 scale = Vector2(0.668125, 0.668125)
 sprite_frames = SubResource("SpriteFrames_an0gt")
 animation = &"attack"
-frame = 1
 
 [node name="GunHit" type="Area2D" parent="AnimatedSprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GunHit"]
-position = Vector2(-72.7318, 7.62402)
+position = Vector2(-53.2745, 7.62402)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_gwosm")
 disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -70)
 zoom = Vector2(1.6, 1.6)
+script = ExtResource("5_tndit")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Camera2D")

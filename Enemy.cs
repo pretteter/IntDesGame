@@ -74,7 +74,7 @@ public partial class Enemy : CharacterBody2D
 	{
 		if (body.GetType().Name == "Player")
 		{
-			player.health -= 1;
+			player.damageReceived();
 			death();
 		}
 	}

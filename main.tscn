@@ -15,9 +15,9 @@ text = "Start
 "
 
 [node name="Quit" type="Button" parent="."]
-offset_left = 287.0
+offset_left = 281.0
 offset_top = 335.0
-offset_right = 812.0
+offset_right = 806.0
 offset_bottom = 433.0
 text = "Quit
 "

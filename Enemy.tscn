@@ -103,7 +103,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1mrh"]
-size = Vector2(1054, 110)
+size = Vector2(1378, 110)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_paa7y"]
 radius = 27.0
@@ -125,7 +125,7 @@ animation = &"idle"
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
-position = Vector2(1, -1)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_s1mrh")
 
 [node name="PlayerCollision" type="Area2D" parent="."]

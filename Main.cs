@@ -29,8 +29,6 @@ public partial class Main : Node
 		//GetNode<PlayerData>("/root/PlayerData");
 		GetNode<Label>("SpawnRate/RateDisplay").Text = value.ToString();
 		GetNode<PlayerData>("/root/PlayerData").SpawnRate = value;
-		GD.Print(GetNode<PlayerData>("/root/PlayerData").SpawnRate);
-		GD.Print(value);
 	}
 }
 

@@ -50,7 +50,7 @@ public partial class Player : CharacterBody2D
 		 */
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		Vector2 direction = Input.GetVector("LeftHit", "RightHit", "ui_up", "ui_down");
 
 		if (direction != Vector2.Zero)
 		{
@@ -84,7 +84,7 @@ public partial class Player : CharacterBody2D
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 			if (velocity.Y == 0)
 			{
-				if (_animationPlayer.CurrentAnimation != "attack")
+				if (_animationPlayer.CurrentAnimation != "attack")		//hier evtl noch Dmg Animation einfügen????-------------------------------------------
 				{
 					_animationPlayer.Play("idle");
 				}
@@ -106,14 +106,11 @@ public partial class Player : CharacterBody2D
 	}
 	public void _on_gun_hit_body_entered(Node2D body)
 	{
-		GD.Print("gun hit area entered");
-		GD.Print("Body in Hitbox: " + body.Name);
         string bodyName = body.Name.ToString();
 
 
         if (bodyName.Contains("Enemy") )
 		{
-			GD.Print("enemy detected");
 			Enemy enemy = GetNode<Enemy>("../../" + bodyName);
 			score += 1000;
 			enemy.death();
@@ -127,14 +124,17 @@ public partial class Player : CharacterBody2D
 	{
 		if (@event.IsActionPressed("LeftHit"))
 		{
-			GD.Print("AttackAnimLeft");
 			_animationPlayer.Play("attack");
 
 		}
 		if (@event.IsActionPressed("RightHit"))
 		{
-			GD.Print("AttackAnimRight");
 			_animationPlayer.Play("attack");
 		}
+	}
+	public void damageReceived()
+	{
+		health -= 1;
+		_animationPlayer.Play("receiveDmg");
 	}
 }
