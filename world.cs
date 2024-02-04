@@ -9,7 +9,7 @@ public partial class world : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GetNode<Timer>("SpawnTimer").WaitTime = 60/GetNode<PlayerData>("/root/PlayerData").SpawnRate;
+		GetNode<Timer>("SpawnTimer").WaitTime = (60/GetNode<PlayerData>("/root/PlayerData").SpawnRate) + GetProcessDeltaTime()*0.2;
 		GD.Print(GetNode<Timer>("SpawnTimer").WaitTime);
 	}
 

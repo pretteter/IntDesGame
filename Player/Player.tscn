@@ -291,12 +291,12 @@ position = Vector2(14.5938, -24.5938)
 scale = Vector2(0.668125, 0.668125)
 sprite_frames = SubResource("SpriteFrames_an0gt")
 animation = &"attack"
+frame = 1
 
 [node name="GunHit" type="Area2D" parent="AnimatedSprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GunHit"]
 position = Vector2(-53.2745, 7.62402)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_gwosm")
 disabled = true
 
