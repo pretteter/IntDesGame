@@ -5,9 +5,13 @@ using System.Runtime.CompilerServices;
 public partial class Main : Node
 {
 
+	// public WebSocket connection = new WebSocket();
 	public override void _Ready()
 	{
 		GD.Print("Hello World!");
+		// var serverConnection = new ServerConnection();
+		// serverConnection.Connect("ws://localhost:3000/quizData/").Wait();
+		// GD.Print(serverConnection);
 	}
 
 	public void _on_start_pressed()
